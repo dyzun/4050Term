@@ -12,9 +12,9 @@ package persist;
 public abstract class DbAccessConfiguration {
 	static final String DRIVER = "com.mysql.jdbc.Driver";
 	
-	static final String CON_URL = "jdbc:mysql://localhost:3306/4050_term";//edit to SQL Table Name
+	static final String CON_URL = "jdbc:mysql://localhost:3306/softengineeringdb";//edit to SQL Table Name
 	
-	static final String DB_CONNECTION_USERNAME = "root";//your username
+	static final String DB_CONNECTION_USERNAME = "root";//your username - root
 	
-	static final String DB_CONNECTION_PASSWORD = "";//your password
+	static final String DB_CONNECTION_PASSWORD = "pass";//your password - pass
 }
