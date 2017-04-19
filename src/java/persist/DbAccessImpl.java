@@ -207,4 +207,39 @@ public class DbAccessImpl extends DbAccessConfiguration implements  DbAccessInte
 	return affected;
     }
 
+    int update(Connection con, String newTeam, int teamID, String teamName, int playerCount, String active, int wins, int loss, int divID) {
+        PreparedStatement stmt;
+	int affected =0;
+	try {
+		stmt = con.prepareStatement(newTeam);
+                stmt.setInt(1,teamID);
+                stmt.setString(2, teamName);
+                stmt.setInt(3, playerCount);
+                stmt.setString(4, active);
+                stmt.setInt(5, wins);
+                stmt.setInt(6, loss);
+                stmt.setInt(7, divID);
+		affected = stmt.executeUpdate(newTeam);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return affected;
+    }
+
+    int delete(Connection con, String removeSport, int sportID) {
+        PreparedStatement stmt;
+		int rows=0;
+		try {
+                    stmt = con.prepareStatement(removeSport);
+                    stmt.setInt(1,sportID);
+                    rows= stmt.executeUpdate(removeSport);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rows;
+    }
+
 }
