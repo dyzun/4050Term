@@ -66,7 +66,11 @@ public class PersistImpl {
         int update = access.update(con,newDiv,divID,divName,inOrOut,teamMax,playerMax,winner,sed,sportID);
     }
     
-    //TODO addTeam(
+    public void addTeam(int teamID,String teamName,int playerCount,String active,int wins,int loss, int divID){
+        String newTeam = "INSERT INTO `team`(`TeamID`,`TeamName`,`PlayerCount`,`Active`,`Wins`,`Losses`,`DivisionID`)" +
+"VALUES (?,?,?,?,?,?,?);";
+        int update = access.update(con, newTeam,teamID,teamName,playerCount,active,wins,loss,divID);
+    }
     
     public void addPlayerToTeam(int teamID, int playerID){
         String aPtT = "UPDATE player SET teamID=? WHERE playerID = ?";
@@ -79,8 +83,14 @@ public class PersistImpl {
     }
     
     //TODO removeSport
+    public void removeSport(int sportID){
+        String removeSport = "DELETE FROM sport WHERE sportID = ?";
+        int delete = access.delete(con, removeSport,sportID);
+    }
     
     //TODO removeDivision
     
     //TODO removeBracket
+    
+    //TODO addBracket
 }
