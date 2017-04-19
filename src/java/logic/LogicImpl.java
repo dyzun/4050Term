@@ -42,21 +42,7 @@ public class LogicImpl {
 		response= res;
 		persist = new PersistImpl();
 	} //constructor
-        
-    public int usernameToId(String username){
-    ResultSet info = persist.checkIfUserExists(username);
-    try{
-        while(info.next()){
-            int id = info.getInt("id");
-            return id;
-        }
-    }catch (SQLException e) {
-        // TODO Auto-generated catch block
-	e.printStackTrace();
-        }
-    return 0;
-}
-    
+            
 //    public boolean register(String username, String password, String email, String street, String city, String state, String zip){
 //       ResultSet info = persist.checkIfUserExists(username);
 //       try {
