@@ -92,7 +92,26 @@ public class PersistImpl {
         int delete = access.delete(con, removeDiv, divID);
     }
     
-    //TODO removeBracket
+    public void addGame(int gameID,int divID, int team1ID, int team2ID, String venue,
+            Date date, int score1,int score2, int winID, String address){
+        String newGame = "INSERT INTO `games`(`GameID`,`DivisionID`,`Team1`,`Team2"
+                + "`,`Venue`,`Date`,`Coach1score`,`Coach2score`,`Winner`,`Address`) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?);";
+        int update = access.update(con,newGame,gameID,divID,team1ID,team2ID,venue,date,score1,score2,winID,address);
+    }
+    public void removeBracket(int roundID){
+        String removeBracket = "DELETE FROM tournamentbrackets WHERE RoundID = ?;";
+        int delete = access.delete(con,removeBracket,roundID);
+    }
     
-    //TODO addBracket
+    public void addBracket(int roundID, int gameID, int adminID, int sportID, int winID){
+        String newBracket = "INSERT INTO `tournamentbrackets` (`RoundID`,`GameID`,`AdminID`,`SportID`,`PlayoffGameWinner`)"
+                + "VALUES (?,?,?,?);";
+        int update = access.update(con,newBracket,roundID,gameID,adminID,sportID,winID);
+    }
+       
+    public void updatePlayer(int playerID,String phone){
+        String updateP= "UPDATE player SET phone = ? WHERE PlayerID = ?";
+        int update = access.update(con,updateP,playerID,phone);
+    }
 }
