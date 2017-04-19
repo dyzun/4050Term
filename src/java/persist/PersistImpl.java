@@ -53,23 +53,23 @@ public class PersistImpl {
         return rs;
     }
     
-    public void addSport(int sportID,String sportName,int minTeams,int maxTeams, int divTeams, int minTeamSize, int maxTeamSize,
+    public void addSport(String sportName,int minTeams,int maxTeams, int divTeams, int minTeamSize, int maxTeamSize,
             String rules, String inOrOut){
-            String newSport ="INSERT INTO `sport' (`SportID`, `SportName`, `MinTeams`, `MaxTeams`," +
-"`DivisionTeams`, `MinTeamSize`,`MaxTeamSize`,`GameRules`,`IndoorOutdoor`) VALUES (?,?,?,?,?,?,?,?,?);";
-            int update = access.update(con,newSport,sportID,sportName,minTeams,maxTeams,divTeams,minTeamSize,maxTeamSize,rules,inOrOut);
+            String newSport ="INSERT INTO `sport' ( `SportName`, `MinTeams`, `MaxTeams`," +
+"`DivisionTeams`, `MinTeamSize`,`MaxTeamSize`,`GameRules`,`IndoorOutdoor`) VALUES (?,?,?,?,?,?,?,?);";
+            int update = access.update(con,newSport,sportName,minTeams,maxTeams,divTeams,minTeamSize,maxTeamSize,rules,inOrOut);
     }
     
-    public void addDivision(int divID,String divName,String inOrOut,int teamMax,int playerMax,String winner,Date sed,int sportID){
-        String newDiv = "INSERT INTO `division` (`DivisionID`,`DivisionName`,`IndoorOutdoor`," +
-"`TeamMax`,`PlayerMax`,`WinningTeam`,`SeasonEndDate`,`SportID`) VALUES (?,?,?,?,?,?,?,?);";
-        int update = access.update(con,newDiv,divID,divName,inOrOut,teamMax,playerMax,winner,sed,sportID);
+    public void addDivision(String divName,String inOrOut,int teamMax,int playerMax,String winner,Date sed,int sportID){
+        String newDiv = "INSERT INTO `division` (`DivisionName`,`IndoorOutdoor`," +
+"`TeamMax`,`PlayerMax`,`WinningTeam`,`SeasonEndDate`,`SportID`) VALUES (?,?,?,?,?,?,?);";
+        int update = access.update(con,newDiv,divName,inOrOut,teamMax,playerMax,winner,sed,sportID);
     }
     
-    public void addTeam(int teamID,String teamName,int playerCount,String active,int wins,int loss, int divID){
-        String newTeam = "INSERT INTO `team`(`TeamID`,`TeamName`,`PlayerCount`,`Active`,`Wins`,`Losses`,`DivisionID`)" +
-"VALUES (?,?,?,?,?,?,?);";
-        int update = access.update(con, newTeam,teamID,teamName,playerCount,active,wins,loss,divID);
+    public void addTeam(String teamName,int playerCount,String active,int wins,int loss, int divID){
+        String newTeam = "INSERT INTO `team`(`TeamName`,`PlayerCount`,`Active`,`Wins`,`Losses`,`DivisionID`)" +
+"VALUES (?,?,?,?,?,?);";
+        int update = access.update(con, newTeam,teamName,playerCount,active,wins,loss,divID);
     }
     
     public void addPlayerToTeam(int teamID, int playerID){
@@ -92,22 +92,26 @@ public class PersistImpl {
         int delete = access.delete(con, removeDiv, divID);
     }
     
-    public void addGame(int gameID,int divID, int team1ID, int team2ID, String venue,
+    public void addGame(int divID, int team1ID, int team2ID, String venue,
             Date date, int score1,int score2, int winID, String address){
-        String newGame = "INSERT INTO `games`(`GameID`,`DivisionID`,`Team1`,`Team2"
+        String newGame = "INSERT INTO `games`(`DivisionID`,`Team1`,`Team2"
                 + "`,`Venue`,`Date`,`Coach1score`,`Coach2score`,`Winner`,`Address`) "
-                + "VALUES (?,?,?,?,?,?,?,?,?,?);";
-        int update = access.update(con,newGame,gameID,divID,team1ID,team2ID,venue,date,score1,score2,winID,address);
+                + "VALUES (?,?,?,?,?,?,?,?,?);";
+        int update = access.update(con,newGame,divID,team1ID,team2ID,venue,date,score1,score2,winID,address);
     }
     public void removeBracket(int roundID){
         String removeBracket = "DELETE FROM tournamentbrackets WHERE RoundID = ?;";
         int delete = access.delete(con,removeBracket,roundID);
     }
-    
-    public void addBracket(int roundID, int gameID, int adminID, int sportID, int winID){
-        String newBracket = "INSERT INTO `tournamentbrackets` (`RoundID`,`GameID`,`AdminID`,`SportID`,`PlayoffGameWinner`)"
-                + "VALUES (?,?,?,?);";
-        int update = access.update(con,newBracket,roundID,gameID,adminID,sportID,winID);
+    public void addTournament(int adminID,int sportID, String name){
+        String newTourn = "INSERT INTO 'tournament' ('AdminID','SportID','Name') "
+                + "VALUES (?,?,?);";
+        int update=access.update(con, newTourn,adminID,sportID,name);
+    }
+    public void addBracket( int gameID, int tournID, int winID){
+        String newBracket = "INSERT INTO `tournamentbrackets` (`GameID`,`TournID`,`PlayoffGameWinner`)"
+                + "VALUES (?,?,?);";
+        int update = access.update(con,newBracket,gameID,tournID,winID);
     }
        
     public void updatePlayer(int playerID,String phone){
