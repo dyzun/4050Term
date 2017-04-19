@@ -82,13 +82,15 @@ public class PersistImpl {
         int update = access.update(con, rPfT,playerID);
     }
     
-    //TODO removeSport
     public void removeSport(int sportID){
         String removeSport = "DELETE FROM sport WHERE sportID = ?";
         int delete = access.delete(con, removeSport,sportID);
     }
     
-    //TODO removeDivision
+    public void removeDivision(int divID){
+        String removeDiv = "DELETE FROM division WHERE divisionID = ?";
+        int delete = access.delete(con, removeDiv, divID);
+    }
     
     //TODO removeBracket
     
