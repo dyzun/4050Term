@@ -10,7 +10,9 @@ package persist;
  * @author dyzun
  */
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -112,5 +114,97 @@ public class DbAccessImpl extends DbAccessConfiguration implements  DbAccessInte
 		}//if
 		
 	}// disconnect
+
+    ResultSet retrieve(Connection con, String pI, int player_id) {
+        ResultSet rset = null;
+		try {
+			// create a JDBC statement
+			PreparedStatement stm = con.prepareStatement(pI);
+			stm.setInt(1,player_id );
+			// execute a query
+			rset = stm.executeQuery(pI);
+			return rset;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return rset;
+		}
+    }
+
+    int update(Connection con, String newSport, int sportID, String sportName, int minTeams, int maxTeams, int divTeams, int minTeamSize, int maxTeamSize, String rules, String inOrOut) {
+        PreparedStatement stmt;
+	int affected =0;
+	try {
+		stmt = con.prepareStatement(newSport);
+                stmt.setInt(1,sportID);
+                stmt.setString(2, sportName);
+                stmt.setInt(3, minTeams);
+                stmt.setInt(4, maxTeams);
+                stmt.setInt(5, divTeams);
+                stmt.setInt(6, minTeamSize);
+                stmt.setInt(7, maxTeamSize);
+                stmt.setString(8, rules);
+                stmt.setString(9,inOrOut);
+                
+		affected = stmt.executeUpdate(newSport);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return affected;
+    }
+
+    int update(Connection con, String newDiv, int divID, String divName, String inOrOut, int teamMax, int playerMax, String winner, Date sed, int sportID) {
+        PreparedStatement stmt;
+	int affected =0;
+	try {
+		stmt = con.prepareStatement(newDiv);
+                stmt.setInt(1,divID);
+                stmt.setString(2, divName);
+                stmt.setString(3, inOrOut);
+                stmt.setInt(4, teamMax);
+                stmt.setInt(5, playerMax);
+                stmt.setString(6, winner);
+                stmt.setDate(7, sed);
+                stmt.setInt(8, sportID);
+		affected = stmt.executeUpdate(newDiv);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return affected;
+    }
+
+    int update(Connection con, String rPfT, int playerID) {
+        PreparedStatement stmt;
+	int affected =0;
+	try {
+		stmt = con.prepareStatement(rPfT);
+                stmt.setInt(1,playerID);
+		affected = stmt.executeUpdate(rPfT);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+                }
+		return affected;
+    }
+
+    int update(Connection con, String aPtT, int teamID, int playerID) {
+        PreparedStatement stmt;
+	int affected =0;
+	try {
+            stmt = con.prepareStatement(aPtT);
+            stmt.setInt(1,teamID);
+            stmt.setInt(2,playerID);
+            affected = stmt.executeUpdate(aPtT);
+            } catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+            }
+	return affected;
+    }
 
 }
