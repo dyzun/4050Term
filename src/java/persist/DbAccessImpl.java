@@ -129,20 +129,19 @@ public class DbAccessImpl extends DbAccessConfiguration implements DbAccessInter
         }
     }
 
-    int update(Connection con, String newSport, int sportID, String sportName, int minTeams, int maxTeams, int divTeams, int minTeamSize, int maxTeamSize, String rules, String inOrOut) {
+    int update(Connection con, String newSport, String sportName, int minTeams, int maxTeams, int divTeams, int minTeamSize, int maxTeamSize, String rules, String inOrOut) {
         PreparedStatement stmt;
         int affected = 0;
         try {
             stmt = con.prepareStatement(newSport);
-            stmt.setInt(1, sportID);
-            stmt.setString(2, sportName);
-            stmt.setInt(3, minTeams);
-            stmt.setInt(4, maxTeams);
-            stmt.setInt(5, divTeams);
-            stmt.setInt(6, minTeamSize);
-            stmt.setInt(7, maxTeamSize);
-            stmt.setString(8, rules);
-            stmt.setString(9, inOrOut);
+            stmt.setString(1, sportName);
+            stmt.setInt(2, minTeams);
+            stmt.setInt(3, maxTeams);
+            stmt.setInt(4, divTeams);
+            stmt.setInt(5, minTeamSize);
+            stmt.setInt(6, maxTeamSize);
+            stmt.setString(7, rules);
+            stmt.setString(8, inOrOut);
 
             affected = stmt.executeUpdate(newSport);
 
@@ -154,19 +153,18 @@ public class DbAccessImpl extends DbAccessConfiguration implements DbAccessInter
         return affected;
     }
 
-    int update(Connection con, String newDiv, int divID, String divName, String inOrOut, int teamMax, int playerMax, String winner, Date sed, int sportID) {
+    int update(Connection con, String newDiv, String divName, String inOrOut, int teamMax, int playerMax, String winner, Date sed, int sportID) {
         PreparedStatement stmt;
         int affected = 0;
         try {
             stmt = con.prepareStatement(newDiv);
-            stmt.setInt(1, divID);
-            stmt.setString(2, divName);
-            stmt.setString(3, inOrOut);
-            stmt.setInt(4, teamMax);
-            stmt.setInt(5, playerMax);
-            stmt.setString(6, winner);
-            stmt.setDate(7, sed);
-            stmt.setInt(8, sportID);
+            stmt.setString(1, divName);
+            stmt.setString(2, inOrOut);
+            stmt.setInt(3, teamMax);
+            stmt.setInt(4, playerMax);
+            stmt.setString(5, winner);
+            stmt.setDate(6, sed);
+            stmt.setInt(7, sportID);
             affected = stmt.executeUpdate(newDiv);
 
         } catch (SQLException e) {
@@ -205,18 +203,17 @@ public class DbAccessImpl extends DbAccessConfiguration implements DbAccessInter
         return affected;
     }
 
-    int update(Connection con, String newTeam, int teamID, String teamName, int playerCount, String active, int wins, int loss, int divID) {
+    int update(Connection con, String newTeam, String teamName, int playerCount, String active, int wins, int loss, int divID) {
         PreparedStatement stmt;
         int affected = 0;
         try {
             stmt = con.prepareStatement(newTeam);
-            stmt.setInt(1, teamID);
-            stmt.setString(2, teamName);
-            stmt.setInt(3, playerCount);
-            stmt.setString(4, active);
-            stmt.setInt(5, wins);
-            stmt.setInt(6, loss);
-            stmt.setInt(7, divID);
+            stmt.setString(1, teamName);
+            stmt.setInt(2, playerCount);
+            stmt.setString(3, active);
+            stmt.setInt(4, wins);
+            stmt.setInt(5, loss);
+            stmt.setInt(6, divID);
             affected = stmt.executeUpdate(newTeam);
 
         } catch (SQLException e) {
@@ -240,21 +237,20 @@ public class DbAccessImpl extends DbAccessConfiguration implements DbAccessInter
         return rows;
     }
 
-    int update(Connection con, String newGame, int gameID, int divID, int team1ID, int team2ID, String venue, Date date, int score1, int score2, int winID, String address) {
+    int update(Connection con, String newGame, int divID, int team1ID, int team2ID, String venue, Date date, int score1, int score2, int winID, String address) {
         PreparedStatement stmt;
         int affected = 0;
         try {
             stmt = con.prepareStatement(newGame);
-            stmt.setInt(1, gameID);
-            stmt.setInt(2, divID);
-            stmt.setInt(3, team1ID);
-            stmt.setInt(4, team2ID);
-            stmt.setString(5, venue);
-            stmt.setDate(6, date);
-            stmt.setInt(7, score1);
-            stmt.setInt(8, score2);
-            stmt.setInt(9, winID);
-            stmt.setString(10, address);
+            stmt.setInt(1, divID);
+            stmt.setInt(2, team1ID);
+            stmt.setInt(3, team2ID);
+            stmt.setString(4, venue);
+            stmt.setDate(5, date);
+            stmt.setInt(6, score1);
+            stmt.setInt(7, score2);
+            stmt.setInt(8, winID);
+            stmt.setString(9, address);
             affected = stmt.executeUpdate(newGame);
 
         } catch (SQLException e) {
@@ -264,16 +260,14 @@ public class DbAccessImpl extends DbAccessConfiguration implements DbAccessInter
         return affected;
     }
 
-    int update(Connection con, String newBracket, int roundID, int gameID, int adminID,int sportID, int winID) {
+    int update(Connection con, String newBracket, int gameID, int tournID, int winID) {
         PreparedStatement stmt;
         int affected = 0;
         try {
             stmt = con.prepareStatement(newBracket);
-            stmt.setInt(1, roundID);
-            stmt.setInt(2, gameID);
-            stmt.setInt(3, adminID);
-            stmt.setInt(4, sportID);
-            stmt.setInt(5, winID);
+            stmt.setInt(1, gameID);
+            stmt.setInt(2, tournID);
+            stmt.setInt(3, winID);
             affected = stmt.executeUpdate(newBracket);
 
         } catch (SQLException e) {
@@ -291,6 +285,23 @@ public class DbAccessImpl extends DbAccessConfiguration implements DbAccessInter
             stmt.setString(1, phone);
             stmt.setInt(2, playerID);
             affected = stmt.executeUpdate(updateP);
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return affected;
+    }
+
+    int update(Connection con, String newTourn, int adminID, int sportID, String name) {
+        PreparedStatement stmt;
+        int affected = 0;
+        try {
+            stmt = con.prepareStatement(newTourn);
+            stmt.setInt(1, adminID);
+            stmt.setInt(2, sportID);
+            stmt.setString(3, name);
+            affected = stmt.executeUpdate(newTourn);
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
