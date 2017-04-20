@@ -43,7 +43,11 @@ public class LogicImpl {
 		response= res;
 		persist = new PersistImpl();
 	} //constructor
-            
+      
+    public int checkLogin(String username1, String password1) throws SQLException{
+        return persist.checkLogin(username1, password1);
+    }
+    
     public void createSport(String name, int minT, int maxT,int divS, int minP, int maxP,String rules,String in ){
         persist.addSport(name, minT, maxT, divS, minP, maxP, rules, in);
     }
