@@ -25,63 +25,74 @@ import persist.PersistImpl;
  */
 public class LogicImpl {
 
-	HttpServletRequest request=null;
-	HttpServletResponse response=null;
-	PersistImpl persist= null;
-	//ArrayList<Game> gameList = new ArrayList<>();
-	//ArrayList<Review> reviewList = new ArrayList<>();
-	//ArrayList<User> userList = new ArrayList<>();
-        //ArrayList<String> consoleList = new ArrayList<>();
+    HttpServletRequest request = null;
+    HttpServletResponse response = null;
+    PersistImpl persist = null;
+    //ArrayList<Game> gameList = new ArrayList<>();
+    //ArrayList<Review> reviewList = new ArrayList<>();
+    //ArrayList<User> userList = new ArrayList<>();
+    //ArrayList<String> consoleList = new ArrayList<>();
 
     /**
      *
      * @param req
      * @param res
      */
-    public LogicImpl(HttpServletRequest req, HttpServletResponse res){
-		request = req;
-		response= res;
-		persist = new PersistImpl();
-	} //constructor
-      
-    public int checkLogin(String username1, String password1) throws SQLException{
+    public LogicImpl(HttpServletRequest req, HttpServletResponse res) {
+        request = req;
+        response = res;
+        persist = new PersistImpl();
+    } //constructor
+
+    public int checkLogin(String username1, String password1) throws SQLException {
         return persist.checkLogin(username1, password1);
     }
-    
-    public void createSport(String name, int minT, int maxT,int divS, int minP, int maxP,String rules,String in ){
+
+    public void createSport(String name, int minT, int maxT, int divS, int minP, int maxP, String rules, String in) {
         persist.addSport(name, minT, maxT, divS, minP, maxP, rules, in);
     }
-    public void createDivision(String divName, String in, int maxT, int maxP,String win,Date sed,int sportID){
+
+    public void createDivision(String divName, String in, int maxT, int maxP, String win, Date sed, int sportID) {
         persist.addDivision(divName, in, maxP, maxP, win, sed, sportID);
     }
-    public void createTournament(int adminID,int sportID,String name){
+
+    public void createTournament(int adminID, int sportID, String name) {
         persist.addTournament(adminID, sportID, name);
     }
-    public void createGame(int divID,int team1ID, int team2ID,String venue,Date date, int t1Score,int t2score,int winID,String address){
-        persist.addGame(divID, team1ID, team2ID, venue, date, t2score, t2score, winID, address); 
+
+    public void createGame(int divID, int team1ID, int team2ID, String venue, Date date, int t1Score, int t2score, int winID, String address) {
+        persist.addGame(divID, team1ID, team2ID, venue, date, t2score, t2score, winID, address);
     }
-    public void createTeam(String teamName,int maxP,String active, int wins, int losses, int divID ){
+
+    public void createTeam(String teamName, int maxP, String active, int wins, int losses, int divID) {
         persist.addTeam(teamName, losses, active, wins, losses, divID);
     }
-    public void addPlayerToTeam(int teamID, int playerID){
+
+    public void addPlayerToTeam(int teamID, int playerID) {
         persist.addPlayerToTeam(teamID, playerID);
     }
-    public void createBracket(int gameID,int tournID, int winID){
+
+    public void createBracket(int gameID, int tournID, int winID) {
         persist.addBracket(gameID, tournID, winID);
     }
-    public void updateProfile(int playerID, String phone){
+
+    public void updateProfile(int playerID, String phone) {
         persist.updatePlayer(playerID, phone);
     }
-    public void deleteBracket(int bracketID){
+
+    public void deleteBracket(int bracketID) {
         persist.removeBracket(bracketID);
     }
-    public void deleteSport(int sportID){
+
+    public void deleteSport(int sportID) {
         persist.removeSport(sportID);
     }
-    public void deleteDivision(int divID){
+
+    public void deleteDivision(int divID) {
         persist.removeDivision(divID);
     }
-    public void removePlayer(int playerID){
+
+    public void removePlayer(int playerID) {
         persist.removePlayerFromTeam(playerID);
     }
 }

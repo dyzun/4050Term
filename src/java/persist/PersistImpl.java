@@ -31,6 +31,7 @@ public class PersistImpl {
         PreparedStatement ps = con.prepareStatement(loginquery);
         ResultSet results = ps.executeQuery(loginquery);
 
+        // If the resultset is null, change value to 0 (unsuccessful match of username and password)
         if (!results.next()) {
             // No results in rs
             value = 0;

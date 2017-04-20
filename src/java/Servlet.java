@@ -33,25 +33,23 @@ public class Servlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        //request.getRequestDispatcher("login.html").forward(request, response);
-        LogicImpl logic = new LogicImpl(request, response);
+        LogicImpl logic = new LogicImpl(request, response); // Starts the logic layer
 
+        // If the signin button is pressed on the login.jsp page
         if (request.getParameter("signin") != null) {
-
             String username = request.getParameter("username");
             String password = request.getParameter("password");
-            //String errormessage = "Incorrect username or password. Please try again.";
 
+            // If 1 (found match in database), then open the homepage
             if (logic.checkLogin(username, password) == 1) {
                 request.getRequestDispatcher("homepage.html").forward(request, response);
-            } else {
+            } // Else, send a message and re-open the login.jsp
+            else {
                 String message = "Incorrect username or password. Please try again.";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,11 +65,10 @@ public class Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-        processRequest(request, response);
-        }
-        catch (SQLException e) {
+            processRequest(request, response);
+        } catch (SQLException e) {
             System.out.println(e);
-    }
+        }
     }
 
     /**
