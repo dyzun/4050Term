@@ -11,6 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection;
+import java.sql.SQLException;
+import logic.LogicImpl;
 
 /**
  *
@@ -29,20 +32,26 @@ public class Servlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Servlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Servlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            throws ServletException, IOException, SQLException {
+        //request.getRequestDispatcher("login.html").forward(request, response);
+        LogicImpl logic = new LogicImpl(request, response);
+
+        if (request.getParameter("signin") != null) {
+
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            //String errormessage = "Incorrect username or password. Please try again.";
+
+            if (logic.checkLogin(username, password) == 1) {
+                request.getRequestDispatcher("homepage.html").forward(request, response);
+            } else {
+                String message = "Incorrect username or password. Please try again.";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -57,7 +66,12 @@ public class Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
         processRequest(request, response);
+        }
+        catch (SQLException e) {
+            System.out.println(e);
+    }
     }
 
     /**
@@ -71,7 +85,7 @@ public class Servlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request, response);
     }
 
     /**
