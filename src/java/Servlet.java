@@ -39,22 +39,26 @@ public class Servlet extends HttpServlet {
         if (request.getParameter("signin") != null) {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
+            
+            // If the fields are empty, show a message
+            if(username.isEmpty() || password.isEmpty()){
+                String message = "One or both of the required fields are empty. Please try again.";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
 
             // If 1 (found match in database), then open the homepage
-            if (logic.checkLogin(username, password) == 1) {
+            else if (logic.checkLogin(username, password) == 1) {
                 request.getRequestDispatcher("homepage.html").forward(request, response);
-            } // Else, send a message and re-open the login.jsp
+            } 
+
+            // Else, send a message and re-open the login.jsp
             else {
                 String message = "Incorrect username or password. Please try again.";
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-        }
-
-        if (request.getParameter("signin") != null) {
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-        }
+        } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
