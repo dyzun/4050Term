@@ -24,16 +24,10 @@
         <!--==============================header=================================-->
         <header>
             <div class="main">
-                <h1><a href="homepage.html"><img src="images/logo.png" alt=""></a></h1>
+                <h1><a><img src="images/logo.png" alt=""></a></h1>
                 <div class="clear"></div>
             </div>
         </header>
-        <nav>
-            <ul class="menu">
-                <li><a href="registerguestuser.html">Guest Registration</a></li>
-            </ul>
-            <div class="clear"></div>
-        </nav>
         <!--==============================content================================-->
         <section id="content">
             <div align="center">

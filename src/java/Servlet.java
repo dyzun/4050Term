@@ -50,6 +50,11 @@ public class Servlet extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         }
+
+        if (request.getParameter("signin") != null) {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
